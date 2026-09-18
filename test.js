@@ -30,4 +30,7 @@ assertEqual(orders.calculateLoyaltyPoints(roundedOrder), 1, 'loyalty points roun
 const vipOrder = orders.createOrder([{ price: 60, qty: 2 }]); // total = 120, base 12 -> VIP 1.5x = 18
 assertEqual(orders.calculateLoyaltyPoints(vipOrder), 18, 'VIP bonus applies over $100');
 
+const smallOrder = orders.createOrder([{ price: 2, qty: 1 }]); // total = 2, rounds to 0 -> min 1
+assertEqual(orders.calculateLoyaltyPoints(smallOrder), 1, 'minimum 1 point for any positive-total order');
+
 process.exitCode = failures > 0 ? 1 : 0;
