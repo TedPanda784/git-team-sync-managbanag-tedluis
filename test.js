@@ -24,4 +24,10 @@ assertEqual(cancelled.total, 0, 'cancel zeroes total');
 const loyaltyOrder = orders.createOrder([{ price: 20, qty: 3 }]); // total = 60
 assertEqual(orders.calculateLoyaltyPoints(loyaltyOrder), 6, 'loyalty points for a $60 order');
 
+const roundedOrder = orders.createOrder([{ price: 12, qty: 1 }]); // total = 12, 12/10 = 1.2 -> rounds to 1
+assertEqual(orders.calculateLoyaltyPoints(roundedOrder), 1, 'loyalty points round instead of truncate');
+
+const vipOrder = orders.createOrder([{ price: 60, qty: 2 }]); // total = 120, base 12 -> VIP 1.5x = 18
+assertEqual(orders.calculateLoyaltyPoints(vipOrder), 18, 'VIP bonus applies over $100');
+
 process.exitCode = failures > 0 ? 1 : 0;
